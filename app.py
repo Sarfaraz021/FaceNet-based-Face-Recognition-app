@@ -6,6 +6,7 @@ import cv2
 from facenet_pytorch import MTCNN, InceptionResnetV1
 import torch
 
+
 class FaceMatchApp(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -23,17 +24,20 @@ class FaceMatchApp(QMainWindow):
 
         self.image_label = QLabel(self)
         self.image_label.setAlignment(Qt.AlignCenter)
-        self.image_label.setFixedSize(1600, 1200)# border-radius:1000px
-        self.image_label.setStyleSheet("border-radius:1000px;border: 10px solid #6B728E;")
+        self.image_label.setFixedSize(1600, 1200)  # border-radius:1000px
+        self.image_label.setStyleSheet(
+            "border-radius:1000px;border: 10px solid #6B728E;")
 
         self.result_label = QLabel(self)
         self.result_label.setAlignment(Qt.AlignCenter)
-        self.result_label.setStyleSheet("font-size: 40px; font-weight: bold; color:#030637; padding-bottom:30px;")
+        self.result_label.setStyleSheet(
+            "font-size: 40px; font-weight: bold; color:#030637; padding-bottom:30px;")
 
         self.upload_button = QPushButton('Upload Image', self)
         self.upload_button.clicked.connect(self.uploadImage)
-        self.upload_button.setFixedSize(400,80)
-        self.upload_button.setStyleSheet("background-color: #030637; color: white; border-radius: 15px; font-size: 30px; font-weight: bold;")
+        self.upload_button.setFixedSize(400, 80)
+        self.upload_button.setStyleSheet(
+            "background-color: #030637; color: white; border-radius: 15px; font-size: 30px; font-weight: bold;")
 
         # Create layout
         title_layout = QVBoxLayout()
@@ -63,7 +67,8 @@ class FaceMatchApp(QMainWindow):
         # Open file dialog to select an image
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
-        filePath, _ = QFileDialog.getOpenFileName(self, "Open Image File", "", "Image Files (*.png *.jpg *.jpeg *.bmp);;All Files (*)", options=options)
+        filePath, _ = QFileDialog.getOpenFileName(
+            self, "Open Image File", "", "Image Files (*.png *.jpg *.jpeg *.bmp);;All Files (*)", options=options)
 
         if filePath:
             # Perform face matching on the selected image
@@ -82,7 +87,8 @@ class FaceMatchApp(QMainWindow):
         # Convert the image to a QImage
         height, width, channel = img.shape
         bytes_per_line = 3 * width
-        q_image = QImage(img.data, width, height, bytes_per_line, QImage.Format_RGB888)
+        q_image = QImage(img.data, width, height,
+                         bytes_per_line, QImage.Format_RGB888)
 
         # Draw the border around the image
         painter = QPainter(q_image)
@@ -130,7 +136,6 @@ class FaceMatchApp(QMainWindow):
                 result = ('Unknown', min(dist_list), 'No Match')
 
         return result
-
 
 
 if __name__ == '__main__':
